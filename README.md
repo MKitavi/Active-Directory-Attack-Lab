@@ -85,7 +85,7 @@ Both files were **dead ends** — and recognising that quickly was the point:
 The "obvious" loot led nowhere. The real path came from enumeration, not from the planted bait.
 
 ### 4. Privilege Escalation - Credentials re-use
-![janderson Pwn3d!](images/janderson-pwned.png)
+![janderson Pwn3d!](janderson-pwned.png)
 
 The two bulk-created Domain Admins were tested against the domain default password:
 
@@ -97,9 +97,9 @@ nxc smb 192.168.10.10 -u mthompson -p 'Password123!'
 Both returned `(Pwn3d!)` against the Domain Controller — **password reuse on privileged accounts granted Domain Admin.**
 
 ### 5. Domain Compromise
-![NTDS Dump - 38 Hashes](images/ntds-dump.png)
-![Evil-WinRM Shell](Domain Compromise_Evil-WinRM Shell.png)
-![a-mkitavi Pass-the-Hash](images/a-mkitavi-pth.png)
+![NTDS Dump - 38 Hashes](ntds-dump.png)
+![Evil-WinRM Shell](evil-winrm-shell.png)
+![a-mkitavi Pass-the-Hash](a-mkitavi-pth.png)
 
 With Domain Admin, performed a DCSync to extract the entire directory's credential material:
 
