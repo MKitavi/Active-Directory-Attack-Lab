@@ -51,8 +51,8 @@ The DC was fingerprinted by its service profile — Kerberos (88), LDAP/Global C
 > **Note:** `-Pn` was essential — Windows Firewall dropped ICMP on the member servers while still answering on SMB/LDAP, so a ping-only sweep would have under-reported live hosts.
 
 ### 2. Enumeration
-![Domain Admins Group](images/domain-admins-enum.png)
-![NetExec Shares FS-01](images/netexec-shares-fs01.png)
+![Domain Admins Group](Enumeration_Domain%20Admins%20Group.png)
+![NetExec Shares FS-01](Enumeration-NetExec%20Shares%20FS-01.png)
 
 Using a single low-privilege domain credential (`jclark`), enumerated the domain over SMB and LDAP with NetExec.
 
@@ -85,7 +85,7 @@ Both files were **dead ends** — and recognising that quickly was the point:
 The "obvious" loot led nowhere. The real path came from enumeration, not from the planted bait.
 
 ### 4. Privilege Escalation - Credentials re-use
-![janderson Pwn3d!](janderson-pwned.png)
+![janderson Pwn3d!](Privilege%20Escalation_janderson%20Pwn3dl.png)
 
 The two bulk-created Domain Admins were tested against the domain default password:
 
@@ -97,9 +97,9 @@ nxc smb 192.168.10.10 -u mthompson -p 'Password123!'
 Both returned `(Pwn3d!)` against the Domain Controller — **password reuse on privileged accounts granted Domain Admin.**
 
 ### 5. Domain Compromise
-![NTDS Dump - 38 Hashes](ntds-dump.png)
-![Evil-WinRM Shell](evil-winrm-shell.png)
-![a-mkitavi Pass-the-Hash](a-mkitavi-pth.png)
+![NTDS Dump - 38 Hashes](Domain%20Compromise_%5BNTDS%20Dump%20-%2038%20Hashe....png)
+![Evil-WinRM Shell](Domain%20Compromise_Evil-WinRM%20Shell.png)
+![a-mkitavi Pass-the-Hash](Domain%20Compromise_a-mkitavi%20Pass-the-Hash....png)
 
 With Domain Admin, performed a DCSync to extract the entire directory's credential material:
 
