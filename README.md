@@ -51,8 +51,8 @@ The DC was fingerprinted by its service profile — Kerberos (88), LDAP/Global C
 > **Note:** `-Pn` was essential — Windows Firewall dropped ICMP on the member servers while still answering on SMB/LDAP, so a ping-only sweep would have under-reported live hosts.
 
 ### 2. Enumeration
-![Domain Admins Group](images/domain-admins-enum.png)
-![NetExec Shares FS-01](EnumerationNetExec Shares FS-01.png)
+![Domain Admins Group](domain-admins-enum.png)
+![NetExec Shares FS-01](netexec-shares-fs01.png)
 
 Using a single low-privilege domain credential (`jclark`), enumerated the domain over SMB and LDAP with NetExec.
 
