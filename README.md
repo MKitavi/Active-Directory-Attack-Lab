@@ -85,7 +85,7 @@ Both files were **dead ends** — and recognising that quickly was the point:
 The "obvious" loot led nowhere. The real path came from enumeration, not from the planted bait.
 
 ### 4. Privilege Escalation - Credentials re-use
-![janderson Pwn3d!](Privilege%20Escalation_janderson%20Pwn3dl.png)
+![janderson Pwn3d!](Privilege%20Escalation_janderson%20Pwn3dl.png) 
 
 The two bulk-created Domain Admins were tested against the domain default password:
 
