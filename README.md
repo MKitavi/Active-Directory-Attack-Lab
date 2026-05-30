@@ -37,7 +37,7 @@ This project documents an end-to-end internal Active Directory penetration test 
 The engagement followed a standard internal-assessment kill chain: **Recon → Enumeration → Credential Discovery → Privilege Escalation → Domain Compromise.**
 
 ### 1. Reconnaissance
-![Nmap DC Scan](images/nmap-scan.png)
+![Nmap DC Scan](Reconnaissance.png)
 
 Confirmed network reachability and mapped live hosts.
 
