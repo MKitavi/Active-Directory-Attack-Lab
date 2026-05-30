@@ -37,6 +37,7 @@ This project documents an end-to-end internal Active Directory penetration test 
 The engagement followed a standard internal-assessment kill chain: **Recon → Enumeration → Credential Discovery → Privilege Escalation → Domain Compromise.**
 
 ### 1. Reconnaissance
+![Nmap DC Scan](images/nmap-scan.png)
 
 Confirmed network reachability and mapped live hosts.
 
@@ -50,6 +51,8 @@ The DC was fingerprinted by its service profile — Kerberos (88), LDAP/Global C
 > **Note:** `-Pn` was essential — Windows Firewall dropped ICMP on the member servers while still answering on SMB/LDAP, so a ping-only sweep would have under-reported live hosts.
 
 ### 2. Enumeration
+![Domain Admins Group](images/domain-admins-enum.png)
+![NetExec Shares FS-01](images/netexec-shares.png)
 
 Using a single low-privilege domain credential (`jclark`), enumerated the domain over SMB and LDAP with NetExec.
 
@@ -81,7 +84,8 @@ Both files were **dead ends** — and recognising that quickly was the point:
 
 The "obvious" loot led nowhere. The real path came from enumeration, not from the planted bait.
 
-### 4. Privilege Escalation — Credential Reuse
+### 4. Privilege Escalation - Credentials re-use
+![janderson Pwn3d!](images/janderson-pwned.png)
 
 The two bulk-created Domain Admins were tested against the domain default password:
 
@@ -93,6 +97,9 @@ nxc smb 192.168.10.10 -u mthompson -p 'Password123!'
 Both returned `(Pwn3d!)` against the Domain Controller — **password reuse on privileged accounts granted Domain Admin.**
 
 ### 5. Domain Compromise
+![NTDS Dump - 38 Hashes](images/ntds-dump.png)
+![Evil-WinRM Shell](images/evil-winrm-shell.png)
+![a-mkitavi Pass-the-Hash](images/a-mkitavi-pth.png)
 
 With Domain Admin, performed a DCSync to extract the entire directory's credential material:
 
