@@ -37,7 +37,10 @@ This project documents an end-to-end internal Active Directory penetration test 
 The engagement followed a standard internal-assessment kill chain: **Recon → Enumeration → Credential Discovery → Privilege Escalation → Domain Compromise.**
 
 ### 1. Reconnaissance
-![Nmap DC Scan](Reconnaissance.png)
+
+<p align="center">
+  <img src="Reconnaissance.png" width="80%" alt="Nmap DC Scan"/>
+</p>
 
 Confirmed network reachability and mapped live hosts.
 
@@ -49,10 +52,15 @@ sudo nmap -Pn -sV -p 88,135,139,389,445,464,636,3268,5985 192.168.10.10 192.168.
 The DC was fingerprinted by its service profile — Kerberos (88), LDAP/Global Catalog (389/636/3268), and kpasswd (464) — a combination unique to a Domain Controller. The LDAP banner leaked the domain name and DC hostname before any authentication. WinRM (5985) was noted as a future remote-execution channel.
 
 > **Note:** `-Pn` was essential — Windows Firewall dropped ICMP on the member servers while still answering on SMB/LDAP, so a ping-only sweep would have under-reported live hosts.
+---
 
 ### 2. Enumeration
-![Domain Admins Group](Enumeration_Domain%20Admins%20Group.png)
-![NetExec Shares FS-01](Enumeration-NetExec%20Shares%20FS-01.png)
+
+<p align="center">
+  <img src="domain-admins.png" width="48%" alt="Domain Admins Group"/>
+  &nbsp;&nbsp;
+  <img src="netexec-shares.png" width="48%" alt="NetExec Shares FS-01"/>
+</p>
 
 Using a single low-privilege domain credential (`jclark`), enumerated the domain over SMB and LDAP with NetExec.
 
@@ -68,6 +76,7 @@ Key results:
 - **Domain Admins** membership: `Administrator`, `a-mkitavi`, **`janderson`**, **`mthompson`**.
 
 That last finding was the turning point: two of the *bulk-provisioned* users were sitting in Domain Admins.
+--
 
 ### 3. Credential Discovery — and Two Decoys
 
@@ -83,9 +92,13 @@ Both files were **dead ends** — and recognising that quickly was the point:
 - `passwords.txt` advertised a local-admin password that **failed** against the workstations (built-in local admin disabled / credential invalid).
 
 The "obvious" loot led nowhere. The real path came from enumeration, not from the planted bait.
+----
 
-### 4. Privilege Escalation - Credentials re-use
-![janderson Pwn3d!](janderson-pwned.png)
+### 4. Privilege Escalation
+
+<p align="center">
+  <img src="janderson-pwned.png" width="80%" alt="janderson Pwn3d!"/>
+</p
 
 The two bulk-created Domain Admins were tested against the domain default password:
 
@@ -95,13 +108,19 @@ nxc smb 192.168.10.10 -u mthompson -p 'Password123!'
 ```
 
 Both returned `(Pwn3d!)` against the Domain Controller — **password reuse on privileged accounts granted Domain Admin.**
+---
 
 ### 5. Domain Compromise
-![NTDS Dump - 38 Hashes](ntds-dump.png)
 
-![Evil-WinRM Shell](evil-winrm.png)
+<p align="center">
+  <img src="ntds-dump.png" width="48%" alt="NTDS Dump - 38 Hashes"/>
+  &nbsp;&nbsp;
+  <img src="evil-winrm.png" width="48%" alt="Evil-WinRM Shell"/>
+</p>
 
-![a-mkitavi Pass-the-Hash](a-mkitavi-pth.png)
+<p align="center">
+  <img src="a-mkitavi-pth.png" width="80%" alt="a-mkitavi Pass-the-Hash"/>
+</p>
 
 With Domain Admin, performed a DCSync to extract the entire directory's credential material:
 
