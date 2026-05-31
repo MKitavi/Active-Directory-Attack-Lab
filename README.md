@@ -98,7 +98,9 @@ Both returned `(Pwn3d!)` against the Domain Controller — **password reuse on p
 
 ### 5. Domain Compromise
 ![NTDS Dump - 38 Hashes](ntds-dump.png)
+
 ![Evil-WinRM Shell](evil-winrm.png)
+
 ![a-mkitavi Pass-the-Hash](a-mkitavi-pth.png)
 
 With Domain Admin, performed a DCSync to extract the entire directory's credential material:
